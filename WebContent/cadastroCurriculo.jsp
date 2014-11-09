@@ -66,6 +66,13 @@
 					<h:outputLabel value="Idiomas: "></h:outputLabel>
 					<h:inputText value="#{sessaoMB.idiomas}"
 						styleClass="form-control"></h:inputText>
+						
+					<h:outputLabel value="URL 1: "></h:outputLabel>
+					<h:inputText value="#{sessaoMB.link1}"
+						styleClass="form-control"></h:inputText>
+					<h:outputLabel value="URL 2: "></h:outputLabel>
+					<h:inputText value="#{sessaoMB.link2}"
+						styleClass="form-control"></h:inputText>
 				</h:panelGrid>
 				<h:commandButton value="Cadastrar currículo"
 					action="#{sessaoMB.cadastraCurriculo}" styleClass="btn btn-primary"></h:commandButton>
