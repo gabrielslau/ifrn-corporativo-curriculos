@@ -56,6 +56,12 @@
 
 			<div>
 				<h3>Currículos</h3>
+				<!-- TODO: implementar método de busca -->
+				<h:form styleClass="form-inline">
+					<h:inputText styleClass="form-control"></h:inputText>
+					<h:commandButton value="Pesquisar currículos" styleClass="btn btn-default"></h:commandButton>
+				</h:form>
+				
 				<h:dataTable styleClass="table table-bordered table-hover"
 					rendered="#{curriculosMB.comCurriculos}"
 					value="#{curriculosMB.curriculos}" var="curriculo">
@@ -66,6 +72,7 @@
 						<h:outputText value="#{curriculo.objetivo}"></h:outputText>
 					</h:column>
 					<h:column>
+						
 						<f:facet name="header">
 							<h:outputText value="Qualificações" />
 						</f:facet>
