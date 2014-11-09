@@ -83,22 +83,28 @@ public class UsuarioMB {
 	}
 
 	public String cadastraUsuario() {
-		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
-		Usuario usuario = new Usuario(nome, username, senha, idade, email,
-				estadoCivil);
-		App app = App.getInstancia();
-		if (!app.hasLogin(username)) {
-			app.adicionaUsuario(usuario);
-			this.setMensagem("Usuario cadastrado com sucesso!");
-			try {
-				externalContext.redirect(externalContext
-						.getRequestContextPath() + "/app/login.jsp");
-			} catch (IOException e) {
-				throw new FacesException(e);
+		if (!this.nome.isEmpty() && !this.username.isEmpty()
+				&& !this.senha.isEmpty() && !this.email.isEmpty()
+				&& !this.estadoCivil.isEmpty()) {
+			ExternalContext externalContext = FacesContext.getCurrentInstance()
+					.getExternalContext();
+			Usuario usuario = new Usuario(nome, username, senha, idade, email,
+					estadoCivil);
+			App app = App.getInstancia();
+			if (!app.hasLogin(username)) {
+				app.adicionaUsuario(usuario);
+				this.setMensagem("Usuario cadastrado com sucesso!");
+				try {
+					externalContext.redirect(externalContext
+							.getRequestContextPath() + "/app/login.jsp");
+				} catch (IOException e) {
+					throw new FacesException(e);
+				}
+			} else {
+				this.setMensagem("O nome de usuário informado já existe, escolha outro!");
 			}
 		} else {
-			this.setMensagem("O nome de usuário informado já existe, escolha outro!");
+			this.setMensagem("É necessário informar todos os parâmetros solicitados!");
 		}
 		return "cadastroUsuario.jsp";
 	}
