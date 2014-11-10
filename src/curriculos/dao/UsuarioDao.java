@@ -2,7 +2,12 @@ package curriculos.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import curriculos.negocio.Usuario;
 import curriculos.util.Conexao;
@@ -44,5 +49,27 @@ public class UsuarioDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public List<Usuario> getAllUsaruios() {
+        List<Usuario> usuarios = new ArrayList<Usuario>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("select * from usuario");
+            while (rs.next()) {
+            	Usuario usuario = new Usuario();
+            	usuario.setNome(rs.getString("nome"));
+            	usuario.setUsername(rs.getString("username"));
+            	usuario.setSenha(rs.getString("senha"));
+            	usuario.setIdade(rs.getString("idade"));
+            	usuario.setEmail(rs.getString("email"));
+            	usuario.setEstadoCivil(rs.getString("estadocivil"));
+   
+            	usuarios.add(usuario);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return usuarios;
     }
 }
