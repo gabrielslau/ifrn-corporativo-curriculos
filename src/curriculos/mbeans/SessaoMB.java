@@ -16,13 +16,21 @@ import curriculos.negocio.Usuario;
 @SessionScoped
 public class SessaoMB {
 	private Usuario usuario;
-	private String objetivo, qualificacoes, idiomas, link1, link2;
-	private String mensagem;
+	private String objetivo, qualificacoes, idiomas, link1, link2, mensagem,
+	search;
 
 	public SessaoMB() {
 		super();
 		this.usuario = null;
 		this.mensagem = "";
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
 	}
 
 	public String getObjetivo() {
@@ -105,6 +113,35 @@ public class SessaoMB {
 		} catch (IOException e) {
 			throw new FacesException(e);
 		}
+	}
+
+	public String buscaCurriculo() {
+		App app = App.getInstancia();
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+
+		if (this.search != null) {
+
+			// TODO
+
+			// Curriculo curriculo = new Curriculo(this.objetivo,
+			// this.qualificacoes, this.idiomas, this.link1, this.link2,
+			// this.usuario);
+			// if (app.adicionaCurriculo(curriculo)) {
+			// this.setMensagem("Currículo cadastrado com sucesso!");
+			// try {
+			// externalContext.redirect(externalContext
+			// .getRequestContextPath() + "/app/index.jsp");
+			// } catch (IOException e) {
+			// throw new FacesException(e);
+			// }
+			// } else {
+			// this.setMensagem("Este Currículo já está cadastrado!");
+			// }
+		} else {
+			this.setMensagem("É necessário informar o objetivo!");
+		}
+		return "index.jsp";
 	}
 
 	public String cadastraCurriculo() {
