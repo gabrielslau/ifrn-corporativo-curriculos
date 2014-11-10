@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import curriculos.negocio.Curriculo;
-import curriculos.negocio.Usuario;
 import curriculos.util.Conexao;
 
 public class CurriculoDao {
