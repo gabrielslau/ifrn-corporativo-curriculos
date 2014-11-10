@@ -8,68 +8,79 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import curriculos.negocio.Usuario;
 import curriculos.util.Conexao;
 
 public class UsuarioDao {
 	private Connection connection;
 
-    public UsuarioDao() {
-        connection = Conexao.getConnection();
-    }
-    
-    public void addUsario(Usuario usuario) {
-        try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into usuario(nome,username,senha,idade,email,estadocivil) values (?, ?, ?, ?, ?, ?)");
+	public UsuarioDao() {
+		connection = Conexao.getConnection();
+	}
 
-            preparedStatement.setString(1, usuario.getNome());
-            preparedStatement.setString(2, usuario.getUsername());
-            preparedStatement.setString(3, usuario.getSenha());
-            preparedStatement.setString(4, usuario.getIdade());
-            preparedStatement.setString(5, usuario.getEmail());
-            preparedStatement.setString(6, usuario.getEstadoCivil());
+	public void addUsuario(Usuario usuario) {
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("insert into usuario(nome,username,senha,idade,email,estadocivil) values (?, ?, ?, ?, ?, ?)");
+			preparedStatement.setString(1, usuario.getNome());
+			preparedStatement.setString(2, usuario.getUsername());
+			preparedStatement.setString(3, usuario.getSenha());
+			preparedStatement.setString(4, usuario.getIdade());
+			preparedStatement.setString(5, usuario.getEmail());
+			preparedStatement.setString(6, usuario.getEstadoCivil());
 
-            preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void deleteUsario(int usuarioId) {
-        try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("delete from usuario where nome=?");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-            preparedStatement.setInt(1, usuarioId);
-            preparedStatement.executeUpdate();
+	public void deleteUsuario(int usuarioId) {
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("delete from usuario where nome=?");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    public List<Usuario> getAllUsaruios() {
-        List<Usuario> usuarios = new ArrayList<Usuario>();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from usuario");
-            while (rs.next()) {
-            	Usuario usuario = new Usuario();
-            	usuario.setNome(rs.getString("nome"));
-            	usuario.setUsername(rs.getString("username"));
-            	usuario.setSenha(rs.getString("senha"));
-            	usuario.setIdade(rs.getString("idade"));
-            	usuario.setEmail(rs.getString("email"));
-            	usuario.setEstadoCivil(rs.getString("estadocivil"));
-   
-            	usuarios.add(usuario);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+			preparedStatement.setInt(1, usuarioId);
+			preparedStatement.executeUpdate();
 
-        return usuarios;
-    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<Usuario> getAllUsuarios() {
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("select * from usuario");
+			while (rs.next()) {
+				Usuario usuario = new Usuario();
+				usuario.setNome(rs.getString("nome"));
+				usuario.setUsername(rs.getString("username"));
+				usuario.setSenha(rs.getString("senha"));
+				usuario.setIdade(rs.getString("idade"));
+				usuario.setEmail(rs.getString("email"));
+				usuario.setEstadoCivil(rs.getString("estadocivil"));
+
+				usuarios.add(usuario);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return usuarios;
+	}
+
+	public Usuario getUsuario() {
+		Usuario usuario = new Usuario();
+		try {
+			Statement statement = connection.createStatement();
+			// TODO: implementar query para pegar os dados do usuário
+			// "select * from usuario where id = ?"
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return usuario;
+	}
 }

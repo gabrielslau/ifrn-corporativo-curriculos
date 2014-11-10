@@ -3,15 +3,22 @@ package curriculos.negocio;
 import java.util.ArrayList;
 import java.util.List;
 
+import curriculos.dao.CurriculoDao;
+import curriculos.dao.UsuarioDao;
+
 public class App {
 	private static App instancia;
 	private List<Usuario> usuarios;
 	private List<Curriculo> curriculos;
+	private UsuarioDao usuarioDao;
+	private CurriculoDao curriculoDao;
 
 	public App(){
 		super();
 		usuarios = new ArrayList<Usuario>();
 		curriculos = new ArrayList<Curriculo>();
+		usuarioDao = new UsuarioDao();
+		curriculoDao = new CurriculoDao();
 	}
 
 	/**
@@ -26,6 +33,7 @@ public class App {
 	}
 
 	public List<Curriculo> getCurriculos() {
+		this.curriculos = curriculoDao.getAllCurriculo();
 		return this.curriculos;
 	}
 
@@ -38,6 +46,7 @@ public class App {
 	public boolean adicionaUsuario(Usuario usuario) {
 		if (usuario != null && !this.usuarios.contains(usuario)) {
 			this.usuarios.add(usuario);
+			usuarioDao.addUsuario(usuario);
 			return true;
 		}
 		return false;
@@ -52,6 +61,7 @@ public class App {
 	public boolean adicionaCurriculo(Curriculo curriculo) {
 		if (curriculo != null && !this.curriculos.contains(curriculo)) {
 			this.curriculos.add(curriculo);
+			curriculoDao.addCurriculo(curriculo);
 			return true;
 		}
 		return false;
@@ -64,6 +74,7 @@ public class App {
 	 * @return boolean
 	 */
 	public boolean hasLogin(String username) {
+		usuarios = usuarioDao.getAllUsuarios();
 		for (Usuario usuario : usuarios) {
 			if (usuario.getUsername().equals(username)) {
 				return true;
@@ -80,6 +91,7 @@ public class App {
 	 * @return mixed null or Usuario
 	 */
 	public Usuario autenticar(String username, String senha) {
+		usuarios = usuarioDao.getAllUsuarios();
 		for (Usuario usuario : usuarios) {
 			if (usuario.getUsername().equals(username)
 					&& usuario.getSenha().equals(senha)) {
