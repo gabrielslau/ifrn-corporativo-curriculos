@@ -58,8 +58,8 @@
 				<h3>Currículos</h3>
 				<!-- TODO: implementar método de busca -->
 				<h:form styleClass="form-inline">
-					<h:inputText styleClass="form-control"></h:inputText>
-					<h:commandButton value="Pesquisar currículos" styleClass="btn btn-default"></h:commandButton>
+					<h:inputText value="#{sessaoMB.search}" styleClass="form-control"></h:inputText>
+					<h:commandButton value="Pesquisar currículos" styleClass="btn btn-default" action="#{sessaoMB.buscaCurriculo}"></h:commandButton>
 				</h:form>
 				
 				<h:dataTable styleClass="table table-bordered table-hover"
