@@ -22,7 +22,7 @@ public class UsuarioDao {
     public void addUsario(Usuario usuario) {
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into usuario(nome,username,senha,idade,email,estadocivil) values (?, ?, ? )");
+                    .prepareStatement("insert into usuario(nome,username,senha,idade,email,estadocivil) values (?, ?, ?, ?, ?, ?)");
 
             preparedStatement.setString(1, usuario.getNome());
             preparedStatement.setString(2, usuario.getUsername());
@@ -38,12 +38,12 @@ public class UsuarioDao {
         }
     }
     
-    public void deleteUsario(String nome) {
+    public void deleteUsario(int usuarioId) {
         try {
             PreparedStatement preparedStatement = connection
                     .prepareStatement("delete from usuario where nome=?");
 
-            preparedStatement.setString(1, nome);
+            preparedStatement.setInt(1, usuarioId);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
