@@ -3,12 +3,25 @@ package curriculos.negocio;
 import java.sql.Date;
 
 public class Curriculo {
+	private int usuarioId;
 	private String objetivo, qualificacoes, idiomas, link1, link2;
 	private Date created;
 	private Usuario usuario;
 
 	public Curriculo() {
 		super();
+	}
+
+	public Curriculo(String objetivo, String qualificacoes, String idiomas, String link1, String link2,
+			Usuario usuario, int usuarioId) {
+		super();
+		this.objetivo = objetivo; // Not NUll
+		this.qualificacoes = qualificacoes;
+		this.idiomas = idiomas;
+		this.link1 = link1;
+		this.link2 = link2;
+		this.usuarioId = usuarioId;
+		this.usuario = usuario;
 	}
 
 	public Curriculo(String objetivo, String qualificacoes, String idiomas, String link1, String link2,
@@ -20,6 +33,14 @@ public class Curriculo {
 		this.link1 = link1;
 		this.link2 = link2;
 		this.usuario = usuario;
+	}
+
+	public int getUsuarioId() {
+		return usuarioId;
+	}
+
+	public void setUsuarioId(int usuarioId) {
+		this.usuarioId = usuarioId;
 	}
 
 	public String getObjetivo() {

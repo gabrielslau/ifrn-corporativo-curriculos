@@ -13,58 +13,60 @@ import curriculos.util.Conexao;
 
 public class CurriculoDao {
 	private Connection connection;
-	
-    public CurriculoDao() {
-        connection = Conexao.getConnection();
-    }
-    public void addCurriculo(Curriculo curriculo) {
-        try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into curriculo(objetivo,qualificacoes,idiomas,link1,link2) values (?, ?, ?, ?, ?)");
 
-            preparedStatement.setString(1, curriculo.getObjetivo());
-            preparedStatement.setString(2, curriculo.getQualificacoes());
-            preparedStatement.setString(3, curriculo.getIdiomas());
-            preparedStatement.setString(4, curriculo.getLink1());
-            preparedStatement.setString(5, curriculo.getLink2());
+	public CurriculoDao() {
+		connection = Conexao.getConnection();
+	}
+	public void addCurriculo(Curriculo curriculo) {
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("insert into curriculo(objetivo,qualificacoes,idiomas,link1,link2, usuarioId) values (?, ?, ?, ?, ?, ?)");
 
-            preparedStatement.executeUpdate();
+			preparedStatement.setString(1, curriculo.getObjetivo());
+			preparedStatement.setString(2, curriculo.getQualificacoes());
+			preparedStatement.setString(3, curriculo.getIdiomas());
+			preparedStatement.setString(4, curriculo.getLink1());
+			preparedStatement.setString(5, curriculo.getLink2());
+			preparedStatement.setInt(6, curriculo.getUsuario().getUsuarioId());
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    public void deleteCurriculo(int curriculoId) {
-        try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("delete from curriculo where curriculoId=?");
+			preparedStatement.executeUpdate();
 
-            preparedStatement.setInt(1, curriculoId);
-            preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void deleteCurriculo(int curriculoId) {
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("delete from curriculo where curriculoId=?");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    public List<Curriculo> getAllCurriculo() {
-        List<Curriculo> curriculos = new ArrayList<Curriculo>();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from curriculo");
-            while (rs.next()) {
-            	Curriculo curriculo = new Curriculo();
-            	curriculo.setObjetivo(rs.getString("objetivo"));
-            	curriculo.setQualificacoes(rs.getString("qualificacoes"));
-            	curriculo.setIdiomas(rs.getString("idiomas"));
-            	curriculo.setLink1(rs.getString("link1"));
-            	curriculo.setLink2(rs.getString("link2"));
-   
-            	curriculos.add(curriculo);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+			preparedStatement.setInt(1, curriculoId);
+			preparedStatement.executeUpdate();
 
-        return curriculos;
-    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public List<Curriculo> getAllCurriculo() {
+		List<Curriculo> curriculos = new ArrayList<Curriculo>();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("select * from curriculo");
+			while (rs.next()) {
+				Curriculo curriculo = new Curriculo();
+				curriculo.setObjetivo(rs.getString("objetivo"));
+				curriculo.setQualificacoes(rs.getString("qualificacoes"));
+				curriculo.setIdiomas(rs.getString("idiomas"));
+				curriculo.setLink1(rs.getString("link1"));
+				curriculo.setLink2(rs.getString("link2"));
+				curriculo.setUsuarioId(rs.getInt("usuarioId"));
+
+				curriculos.add(curriculo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return curriculos;
+	}
 }

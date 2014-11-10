@@ -2,10 +2,23 @@ package curriculos.negocio;
 
 public class Usuario {
 	// TODO: aplicar validação com anotações (ver Bean Validation)
+	private int usuarioId;
 	private String nome, username, senha, idade, email, estadoCivil;
 
 	public Usuario() {
 		super();
+	}
+
+	public Usuario(int usuarioId, String nome, String username, String senha, String idade,
+			String email, String estadoCivil) {
+		super();
+		this.usuarioId= usuarioId;
+		this.nome = nome;
+		this.username = username;
+		this.senha = senha;
+		this.idade = idade; // NULL
+		this.email = email;
+		this.estadoCivil = estadoCivil;
 	}
 
 	public Usuario(String nome, String username, String senha, String idade,
@@ -17,6 +30,14 @@ public class Usuario {
 		this.idade = idade; // NULL
 		this.email = email;
 		this.estadoCivil = estadoCivil;
+	}
+
+	public int getUsuarioId() {
+		return usuarioId;
+	}
+
+	public void setUsuarioId(int usuarioId) {
+		this.usuarioId = usuarioId;
 	}
 
 	public String getNome() {
