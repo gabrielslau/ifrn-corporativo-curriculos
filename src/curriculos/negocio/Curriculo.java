@@ -14,7 +14,7 @@ public class Curriculo {
 	public Curriculo(String objetivo, String qualificacoes, String idiomas, String link1, String link2,
 			Usuario usuario) {
 		super();
-		this.objetivo = objetivo;
+		this.objetivo = objetivo; // Not NUll
 		this.qualificacoes = qualificacoes;
 		this.idiomas = idiomas;
 		this.link1 = link1;

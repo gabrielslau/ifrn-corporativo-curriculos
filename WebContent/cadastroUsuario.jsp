@@ -73,7 +73,7 @@
 					<h:inputText id="i5" value="#{usuarioMB.email}" required="true" requiredMessage="O email deve ser preenchido"
 						styleClass="form-control"></h:inputText>
 					<h:outputLabel id="o6" value="Estado Civil: "></h:outputLabel>
-					<h:selectOneListbox id="s1" value="Estado Civil" required="true" requiredMessage="O estado civil deve ser preenchido"
+					<h:selectOneListbox id="s1" value="#{usuarioMB.estadoCivil}" required="true" requiredMessage="O estado civil deve ser preenchido"
 						styleClass="form-control" size="1">
 						<f:selectItem itemValue="Desinteressado"
 							itemLabel="Desinteressado" />

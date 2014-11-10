@@ -14,7 +14,7 @@ public class Usuario {
 		this.nome = nome;
 		this.username = username;
 		this.senha = senha;
-		this.idade = idade;
+		this.idade = idade; // NULL
 		this.email = email;
 		this.estadoCivil = estadoCivil;
 	}
