@@ -116,32 +116,13 @@ public class SessaoMB {
 	}
 
 	public String buscaCurriculo() {
-		App app = App.getInstancia();
-		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
-
 		if (this.search != null) {
-
-			// TODO
-
-			// Curriculo curriculo = new Curriculo(this.objetivo,
-			// this.qualificacoes, this.idiomas, this.link1, this.link2,
-			// this.usuario);
-			// if (app.adicionaCurriculo(curriculo)) {
-			// this.setMensagem("Currículo cadastrado com sucesso!");
-			// try {
-			// externalContext.redirect(externalContext
-			// .getRequestContextPath() + "/app/index.jsp");
-			// } catch (IOException e) {
-			// throw new FacesException(e);
-			// }
-			// } else {
-			// this.setMensagem("Este Currículo já está cadastrado!");
-			// }
+			App app = App.getInstancia();
+			app.getCurriculos(this.search);
 		} else {
 			this.setMensagem("É necessário informar o objetivo!");
 		}
-		return "index.jsp";
+		return "busca.jsp";
 	}
 
 	public String cadastraCurriculo() {
@@ -150,9 +131,7 @@ public class SessaoMB {
 				.getExternalContext();
 
 		if (this.objetivo != null) {
-			Curriculo curriculo = new Curriculo(this.objetivo,
-					this.qualificacoes, this.idiomas, this.link1, this.link2,
-					this.usuario);
+			Curriculo curriculo = new Curriculo(this.objetivo, this.qualificacoes, this.idiomas, this.link1, this.link2, this.usuario);
 			if (app.adicionaCurriculo(curriculo)) {
 				this.setMensagem("Currículo cadastrado com sucesso!");
 				try {

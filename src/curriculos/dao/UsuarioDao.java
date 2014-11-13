@@ -18,7 +18,7 @@ public class UsuarioDao {
 		connection = Conexao.getConnection();
 	}
 
-	public void addUsuario(Usuario usuario) {
+	public boolean addUsuario(Usuario usuario) {
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("insert into usuario(nome,username,senha,idade,email,estadocivil) values (?, ?, ?, ?, ?, ?)");
@@ -30,23 +30,25 @@ public class UsuarioDao {
 			preparedStatement.setString(6, usuario.getEstadoCivil());
 
 			preparedStatement.executeUpdate();
-
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
-	public void deleteUsuario(int usuarioId) {
+	public boolean deleteUsuario(int usuarioId) {
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("delete from usuario where nome=?");
 
 			preparedStatement.setInt(1, usuarioId);
 			preparedStatement.executeUpdate();
-
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	public List<Usuario> getAllUsuarios() {
@@ -56,6 +58,7 @@ public class UsuarioDao {
 			ResultSet rs = statement.executeQuery("select * from usuario");
 			while (rs.next()) {
 				Usuario usuario = new Usuario();
+				usuario.setUsuarioId(rs.getInt("usuarioId"));
 				usuario.setNome(rs.getString("nome"));
 				usuario.setUsername(rs.getString("username"));
 				usuario.setSenha(rs.getString("senha"));
@@ -72,12 +75,28 @@ public class UsuarioDao {
 		return usuarios;
 	}
 
-	public Usuario getUsuario() {
-		Usuario usuario = new Usuario();
+	/**
+	 * Retorna um usuário dado o seu ID
+	 *
+	 * @param usuarioId
+	 * @return Usuario | null
+	 */
+	public Usuario getUsuario(int usuarioId) {
+		Usuario usuario = null;
 		try {
-			Statement statement = connection.createStatement();
-			// TODO: implementar query para pegar os dados do usuário
-			// "select * from usuario where id = ?"
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("select * from usuario where usuarioId = ? limit 1");
+			preparedStatement.setInt(1, usuarioId);
+			ResultSet rs = preparedStatement.executeQuery();
+			rs.first();
+
+			usuario = new Usuario(rs.getInt("usuarioId"),
+					rs.getString("nome"), rs.getString("username"),
+					rs.getString("senha"), rs.getString("idade"),
+					rs.getString("email"), rs.getString("estadoCivil"));
+
+			rs.close();
+			preparedStatement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

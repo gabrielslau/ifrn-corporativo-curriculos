@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import curriculos.negocio.Curriculo;
+import curriculos.negocio.Usuario;
 import curriculos.util.Conexao;
 
 public class CurriculoDao {
@@ -17,6 +18,7 @@ public class CurriculoDao {
 	public CurriculoDao() {
 		connection = Conexao.getConnection();
 	}
+
 	public void addCurriculo(Curriculo curriculo) {
 		try {
 			PreparedStatement preparedStatement = connection
@@ -30,11 +32,11 @@ public class CurriculoDao {
 			preparedStatement.setInt(6, curriculo.getUsuario().getUsuarioId());
 
 			preparedStatement.executeUpdate();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
 	public void deleteCurriculo(int curriculoId) {
 		try {
 			PreparedStatement preparedStatement = connection
@@ -47,19 +49,61 @@ public class CurriculoDao {
 			e.printStackTrace();
 		}
 	}
-	public List<Curriculo> getAllCurriculo() {
+
+	public List<Curriculo> getAllCurriculoBySearch(String search) {
 		List<Curriculo> curriculos = new ArrayList<Curriculo>();
 		try {
-			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("select * from curriculo");
+			ResultSet rs = null;
+			UsuarioDao usuarioDao = new UsuarioDao();
+			String query = "select * from curriculo";
+
+			query += " where objetio like '%?%' or qualificacoes like '%?%' or idiomas like '%?%' or link1 like '%?%' or link2 like '%?%'";
+
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(query);
+			preparedStatement.setString(1, search);
+			rs = preparedStatement.executeQuery();
+
 			while (rs.next()) {
 				Curriculo curriculo = new Curriculo();
+				Usuario usuario = usuarioDao.getUsuario(rs.getInt("usuarioId"));
+
 				curriculo.setObjetivo(rs.getString("objetivo"));
 				curriculo.setQualificacoes(rs.getString("qualificacoes"));
 				curriculo.setIdiomas(rs.getString("idiomas"));
 				curriculo.setLink1(rs.getString("link1"));
 				curriculo.setLink2(rs.getString("link2"));
-				curriculo.setUsuarioId(rs.getInt("usuarioId"));
+				curriculo.setUsuario(usuario);
+
+				curriculos.add(curriculo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return curriculos;
+	}
+
+	public List<Curriculo> getAllCurriculo() {
+		List<Curriculo> curriculos = new ArrayList<Curriculo>();
+		try {
+			ResultSet rs = null;
+			UsuarioDao usuarioDao = new UsuarioDao();
+			String query = "select * from curriculo";
+
+			Statement statement = connection.createStatement();
+			rs = statement.executeQuery(query);
+
+			while (rs.next()) {
+				Curriculo curriculo = new Curriculo();
+				Usuario usuario = usuarioDao.getUsuario(rs.getInt("usuarioId"));
+
+				curriculo.setObjetivo(rs.getString("objetivo"));
+				curriculo.setQualificacoes(rs.getString("qualificacoes"));
+				curriculo.setIdiomas(rs.getString("idiomas"));
+				curriculo.setLink1(rs.getString("link1"));
+				curriculo.setLink2(rs.getString("link2"));
+				curriculo.setUsuario(usuario);
 
 				curriculos.add(curriculo);
 			}

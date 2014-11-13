@@ -37,6 +37,11 @@ public class App {
 		return this.curriculos;
 	}
 
+	public List<Curriculo> getCurriculos(String search) {
+		this.curriculos = curriculoDao.getAllCurriculoBySearch(search);
+		return this.curriculos;
+	}
+
 	/**
 	 * Insere um novo usuário
 	 *

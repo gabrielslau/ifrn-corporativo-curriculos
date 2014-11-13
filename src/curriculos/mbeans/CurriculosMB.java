@@ -27,6 +27,10 @@ public class CurriculosMB {
 		return curriculos;
 	}
 
+	public List<Curriculo> getCurriculosBusca() {
+		return curriculos;
+	}
+
 	public void setCurriculos(List<Curriculo> curriculos) {
 		this.curriculos = curriculos;
 	}
@@ -38,6 +42,15 @@ public class CurriculosMB {
 
 	public boolean isComCurriculos() {
 		this.carregaCurriculos();
+		return !this.curriculos.isEmpty();
+	}
+
+	// Gambiarra
+	public boolean isSemCurriculosBusca() {
+		return this.curriculos.isEmpty();
+	}
+
+	public boolean isComCurriculosBusca() {
 		return !this.curriculos.isEmpty();
 	}
 }
